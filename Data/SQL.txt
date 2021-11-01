@@ -1,0 +1,79 @@
+create database QuanLiMuaBanHieuSach
+GO
+USE [QuanLiMuaBanHieuSach]
+GO
+CREATE TABLE NhaCungCap(
+   tenNhaCungCap  NVARCHAR (100) primary key,
+   diaChi	NVARCHAR (100),
+   sdtNCC VARCHAR (50),
+   soFax VARCHAR (50),
+   emailNCC VARCHAR (50),
+   webSite VARCHAR (50)
+      
+);
+CREATE TABLE LoaiSanPham(
+   tenLoaiSanPham  NVARCHAR (100) primary key
+      
+);
+
+CREATE TABLE DonViSanPham(
+   tenDonViSanPham  NVARCHAR (50) primary key
+      
+);
+
+CREATE TABLE SanPham(
+   maSanPham  VARCHAR (50) primary key,
+   tenSanPham  NVARCHAR (50) ,
+  
+   tenLoaiSanPham NVARCHAR (100),
+   Constraint FK_SP_LSP Foreign key(tenLoaiSanPham) references LoaiSanPham(tenLoaiSanPham),
+   tenDonViSanPham  NVARCHAR (50),
+   Constraint FK_SP_DVSP Foreign key(tenDonViSanPham) references DonViSanPham(tenDonViSanPham),
+
+   donGia MONEY ,
+   soLuongCon int,
+   tenNhaCungCap NVARCHAR (100),  
+   Constraint FK_SP_NCC Foreign key(tenNhaCungCap) references NhaCungCap(tenNhaCungCap),
+   hinh VARCHAR(1000)
+   
+);
+
+CREATE TABLE KhachHang(
+   maKhachHang  VARCHAR (50) primary key,
+   tenKhachHang  NVARCHAR (50) ,
+  sdtKH  VARCHAR (50) ,
+  email  VARCHAR (100) 
+   
+);
+CREATE TABLE NhanVien(
+   maNhanVien  VARCHAR (50) primary key,
+   tenNhanVien  NVARCHAR (50) ,
+   ngaySinh Date,
+   gioiTinh bit,
+   soCMND VARCHAR (50) ,
+   tenChucVu NVARCHAR (50),
+   hinh varchar(200),
+   diaChi NVARCHAR (100) ,
+   sdtNV VARCHAR (50) ,
+   email VARCHAR (100)
+   
+);
+CREATE TABLE TaiKhoan(
+   maTaiKhoan VARCHAR (50) ,
+   Constraint FK_MTK_NV Foreign key(maTaiKhoan) references NhanVien(maNhanVien),
+   tenDangNhap VARCHAR (50) primary key,
+   loaiTaiKhoan NVARCHAR (50),
+   matKhau VARCHAR (100)  
+);
+
+INSERT TaiKhoan([maTaiKhoan], [tenDangNhap], [loaiTaiKhoan], [matKhau]) values ('QUANLI321738343','321728343',N'Quản lí', '12345')
+INSERT NhaCungCap([tenNhaCungCap], [diaChi],[sdtNCC],[soFax], [emailNCC], [webSite]) VALUES (N'Nhà xuất bản Kim Đồng', N'60 - 62 Lê Lợi, Quận 1, TP. HCM, Việt Nam','1900636467','290301171201','kingdong@gmail.com' ,'nhaxuatbankimdong.com')
+INSERT LoaiSanPham ([tenLoaiSanPham]) VALUES (N'Bút chì')
+INSERT LoaiSanPham ([tenLoaiSanPham]) VALUES (N'Sách')
+
+INSERT DonViSanPham ([tenDonViSanPham]) VALUES (N'Cuốn')
+INSERT NhanVien values('QUANLI321738343', N'Lam', '2000-12-01', 'true', '1234567890', N'Quản lý', null, N'Long An', '019329323', 'sa@ad.com')
+INSERT KhachHang(maKhachHang, tenKhachHang, sdtKH, email) values ('KH001', N'Nguyễn Võ Phú Lam', '0906912400', 'pl@gmail.com')
+
+
+
